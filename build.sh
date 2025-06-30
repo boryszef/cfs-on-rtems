@@ -6,12 +6,15 @@
 
 set -x
 
+export GIT_SSL_CAINFO=/etc/ssl/certs/ca-certificates.crt
 export NIX_HARDENING_ENABLE=""
 export RTEMS_ROOT=$(pwd)/RTEMS/6
 
 # NIX sets these variables and RTEMS builder picks them up incorrectly
 # instead of those provided by the RTEMS cross-compiler
 unset AR AS CC CXX LD
+
+git submodule update --init --checkout --recursive
 
 cd rsb/rtems
 ../source-builder/sb-set-builder --prefix=${RTEMS_ROOT} 6/rtems-i386
