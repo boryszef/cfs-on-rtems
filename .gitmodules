@@ -7,3 +7,6 @@
 [submodule "rtems"]
 	path = rtems
 	url = https://gitlab.rtems.org/rtems/rtos/rtems.git
+[submodule "rtems-net-legacy"]
+	path = rtems-net-legacy
+	url = https://gitlab.rtems.org/rtems/pkg/rtems-net-legacy.git

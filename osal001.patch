@@ -1,0 +1,40 @@
+diff -c -r osal/src/bsp/pc-rtems/src/bsp_start.c osal/src/bsp/pc-rtems/src/bsp_start.c
+*** osal/src/bsp/pc-rtems/src/bsp_start.c	2025-06-20 21:27:28.171869636 +0200
+--- osal/src/bsp/pc-rtems/src/bsp_start.c	2025-06-20 12:17:42.398217296 +0200
+***************
+*** 206,212 ****
+      /*
+       * Register the IDE partition table.
+       */
+!     status = rtems_ide_part_table_initialize("/dev/hda");
+      if (status != RTEMS_SUCCESSFUL)
+      {
+          /* note this is not necessarily an error, it just means there
+--- 206,212 ----
+      /*
+       * Register the IDE partition table.
+       */
+!     status = rtems_bdpart_register_from_disk("/dev/hda");
+      if (status != RTEMS_SUCCESSFUL)
+      {
+          /* note this is not necessarily an error, it just means there
+***************
+*** 438,443 ****
+--- 438,447 ----
+  #define CONFIGURE_MICROSECONDS_PER_TICK    10000
+  #define CONFIGURE_ATA_DRIVER_TASK_PRIORITY 9
+  
++ #define CONFIGURE_STACK_CHECKER_ENABLED
++ //#define CONFIGURE_STACK_CHECKER_REPORTER rtems_stack_checker_reporter_quiet
++ #define CONFIGURE_INIT
++ 
+  #include <rtems/confdefs.h>
+  
+  #define CONFIGURE_SHELL_COMMANDS_INIT
+***************
+*** 447,449 ****
+--- 451,454 ----
+  #define CONFIGURE_SHELL_USER_COMMANDS &rtems_shell_RTL_Command, &rtems_shell_dlopen_Command, &rtems_shell_dlsym_Command
+  
+  #include <rtems/shellconfig.h>
++ 
