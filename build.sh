@@ -18,14 +18,16 @@ git submodule update --init --checkout --recursive
 
 cd rsb/rtems
 ../source-builder/sb-set-builder --prefix=${RTEMS_ROOT} 6/rtems-i386
+../source-builder/sb-set-builder --prefix=${RTEMS_ROOT} 6/rtems-arm
 ../source-builder/sb-set-builder \
 	--prefix=${RTEMS_ROOT} --target=i386-rtems6 \
 	--with-rtems-bsp=i386/pc386 --with-rtems-tests=yes 6/rtems-kernel
-../source-builder/sb-set-builder --prefix=${RTEMS_ROOT} \
-	--with-rtems-bsp=i386/pc386 6/rtems-net-legacy
+../source-builder/sb-set-builder \
+	--prefix=${RTEMS_ROOT} --target=arm-rtems6 \
+	--with-rtems-bsp=arm/beagleboneblack --with-rtems-tests=yes 6/rtems-kernel
 
 cd ../../rtems-net-legacy
-./waf configure --prefix=${RTEMS_ROOT}
+./waf configure --prefix=${RTEMS_ROOT} --rtems-bsps i386/pc386
 ./waf
 ./waf install
 
