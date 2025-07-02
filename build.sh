@@ -31,14 +31,21 @@ cd ../../rtems-net-legacy
 ./waf
 ./waf install
 
+cd ../rtems-libbsd
+./waf configure --prefix=${RTEMS_ROOT} --rtems-tools=${RTEMS_ROOT} \
+    --rtems-bsps=arm/beagleboneblack --buildset=buildset/default.ini
+./waf
+./waf install
+
 cd ../cFS
+rm -f Makefile funky_defs
 ln -s ../Makefile Makefile
 ln -s ../funky_defs funky_defs
 patch -b -p0 < ../osal001.patch
 rm -rf build
 make SIMULATION= prep
 make -j20 install
-
+exit 0
 cd ..
 rm -rf hda.img
 dd if=/dev/zero of=./hda.img bs=1M count=64
